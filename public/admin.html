@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <!-- <script src="https://unpkg.com/@tailwindcss/browser@4"></script> -->
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Admin: Send a Paragraph or Image</h2>
+        <textarea id="paragraphInput" placeholder="Type a paragraph..."></textarea>
+        <button onclick="sendParagraph()">Send</button>
+        <button onclick="setImage()" id = "imageButton">Image</button>
+        <button onclick="setText()" class = "selected" id = "textButton">Text</button>
+    </div>
+
+    <script>
+        let flag = 0
+
+        const socket = io();
+
+        function sendParagraph() {
+            let text = document.getElementById('paragraphInput').value;
+            if (text.trim() !== "") {
+                if(flag == 1){
+                    text = "~" + text ;
+                }
+                socket.emit('sendParagraph', text);
+                // document.getElementById('paragraphInput').value = ''; // Clear input
+            }
+        }
+
+        function setImage(){
+            document.getElementById('imageButton').className = "selected"
+            document.getElementById('textButton').classList.remove("selected")  
+            flag = 1 ;
+        }
+        function setText(){
+            flag = 0 ;
+            
+            document.getElementById('textButton').className = "selected"
+            document.getElementById('imageButton').classList.remove("selected") 
+        }
+    </script>
+</body>
+</html>

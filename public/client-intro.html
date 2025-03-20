@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Race</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome to TypeRacer !</h2>
+        
+        <!-- Original paragraph to match -->
+     
+        <strong><p id="originalText" >Enter Your Name..</p></strong>
+        
+        <!-- Typing area -->
+        <textarea id="nameArea" placeholder="Enter your name here..."></textarea>
+        <button onclick="enter()">Submit</button>
+    </div>
+
+    <script>
+        const socket = io();
+
+        function enter(){
+            let name =  document.getElementById('nameArea').value ;
+            socket.emit('joinRace', name);
+
+            localStorage.setItem('name', name);
+
+            location.replace("http://localhost:3000/client.html");
+        }
+        
+        
+        
+    </script>
+</body>
+</html>
